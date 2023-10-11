@@ -11,7 +11,8 @@ import { router as planetsRouter } from './routes/planets.js'
 import { router as speciesRouter } from './routes/species.js'
 import { router as starshipsRouter } from './routes/starships.js'
 import { router as vehiclesRouter } from './routes/vehicles.js'
-import { router as seedsRouter } from './routes/seeds.js'
+// Used for seeding database
+// import { router as seedsRouter } from './routes/seeds.js'
 
 const app = express()
 
@@ -26,7 +27,8 @@ app.use('/api/planets', planetsRouter)
 app.use('/api/species', speciesRouter)
 app.use('/api/starships', starshipsRouter)
 app.use('/api/vehicles', vehiclesRouter)
-app.use('/api/seeds', seedsRouter)
+// Used for seeding database
+// app.use('/api/seeds', seedsRouter)
 
 app.use(function (req, res, next) {
   res.status(404).json({ err: 'Not found' })
