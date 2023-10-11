@@ -16,7 +16,12 @@ async function index(req, res) {
 
 async function show(req, res) {
   try {
-    const species = await Species.findOne({url: `/api/species/${req.params.speciesId}/`})
+    let species
+    if (req.params.speciesId.length <= 2 ) {
+      species = await Species.findOne({url: `/api/species/${req.params.speciesId}/`})
+    } else {
+      species = await Species.findById(req.params.speciesId)
+    }    
     if (!species) {
       return res.status(404).json({err: 'Resource not found'})
     }
