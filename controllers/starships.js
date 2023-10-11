@@ -16,7 +16,12 @@ async function index(req, res) {
 
 async function show(req, res) {
   try {
-    const starship = await Starship.findOne({url: `/api/starships/${req.params.starshipId}/`})
+    let starship
+    if (req.params.starshipId.length <= 2 ) {
+      starship = await Starship.findOne({url: `/api/starships/${req.params.starshipId}/`})
+    } else {
+      starship = await Starship.findById(req.params.starshipId)
+    }   
     if (!starship) {
       return res.status(404).json({err: 'Resource not found'})
     }
