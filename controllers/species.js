@@ -1,10 +1,20 @@
 import { Species } from "../models/species.js"
+import { generateIndexResponse } from "../config/helpers.js"
 
-function index(req, res) {
-  
+async function index(req, res) {
+  try {
+    let currPage = req.query.page ? parseInt(req.query.page) : 1
+    let responseObject = await generateIndexResponse(currPage, Species, 'species')
+    if (responseObject.message) {
+      throw new Error(responseObject.message)
+    } 
+    res.json(responseObject) 
+  } catch (error) {
+    res.status(500).json({err: error.message})
+  }
 }
 
-function show(req, res) {
+async function show(req, res) {
 
 }
 
