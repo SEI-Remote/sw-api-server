@@ -15,7 +15,15 @@ async function index(req, res) {
 }
 
 async function show(req, res) {
-
+  try {
+    const species = await Species.findOne({url: `/api/species/${req.params.speciesId}/`})
+    if (!species) {
+      return res.status(404).json({err: 'Resource not found'})
+    }
+    res.json(species)
+  } catch (error) {
+    res.status(500).json({err: error.message})
+  }
 }
 
 export {

@@ -15,7 +15,15 @@ async function index(req, res) {
 }
 
 async function show(req, res) {
-
+  try {
+    const starship = await Starship.findOne({url: `/api/starships/${req.params.starshipId}/`})
+    if (!starship) {
+      return res.status(404).json({err: 'Resource not found'})
+    }
+    res.json(starship)
+  } catch (error) {
+    res.status(500).json({err: error.message})
+  }
 }
 
 export {

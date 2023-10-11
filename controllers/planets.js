@@ -15,7 +15,15 @@ async function index(req, res) {
 }
 
 async function show(req, res) {
-
+  try {
+    const planet = await Planet.findOne({url: `/api/planets/${req.params.planetId}/`})
+    if (!planet) {
+      return res.status(404).json({err: 'Resource not found'})
+    }
+    res.json(planet)
+  } catch (error) {
+    res.status(500).json({err: error.message})
+  }
 }
 
 export {

@@ -15,7 +15,15 @@ async function index(req, res) {
 }
 
 async function show(req, res) {
-
+  try {
+    const film = await Film.findOne({url: `/api/films/${req.params.filmId}/`})
+    if (!film) {
+      return res.status(404).json({err: 'Resource not found'})
+    }
+    res.json(film)
+  } catch (error) {
+    res.status(500).json({err: error.message})
+  }
 }
 
 export {

@@ -16,7 +16,15 @@ async function index(req, res) {
 }
 
 async function show(req, res) {
-
+  try {
+    const vehicle = await Vehicle.findOne({url: `/api/vehicles/${req.params.vehicleId}/`})
+    if (!vehicle) {
+      return res.status(404).json({err: 'Resource not found'})
+    }
+    res.json(vehicle)
+  } catch (error) {
+    res.status(500).json({err: error.message})
+  }
 }
 
 export {
