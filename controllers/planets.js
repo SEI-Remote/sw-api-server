@@ -16,7 +16,12 @@ async function index(req, res) {
 
 async function show(req, res) {
   try {
-    const planet = await Planet.findOne({url: `/api/planets/${req.params.planetId}/`})
+    let planet
+    if (req.params.planetId.length <= 2 ) {
+      planet = await Planet.findOne({url: `/api/planets/${req.params.planetId}/`})
+    } else {
+      planet = await Planet.findById(req.params.planetId)
+    } 
     if (!planet) {
       return res.status(404).json({err: 'Resource not found'})
     }

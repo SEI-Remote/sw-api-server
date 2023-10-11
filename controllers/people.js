@@ -16,7 +16,12 @@ async function index(req, res) {
 
 async function show(req, res) {
   try {
-    const person = await Person.findOne({url: `/api/people/${req.params.personId}/`})
+    let person
+    if (req.params.personId.length <= 2 ) {
+      person = await Person.findOne({url: `/api/people/${req.params.personId}/`})
+    } else {
+      person = await Person.findById(req.params.personId)
+    }    
     if (!person) {
       return res.status(404).json({err: 'Resource not found'})
     }
